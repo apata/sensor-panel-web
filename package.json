@@ -1,0 +1,19 @@
+{
+  "name": "sensor-panel",
+  "version": "0.0.1",
+  "description": "web app for displaying sensor panel results",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo 'temporary script'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apata/sensor-panel-web.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/apata/sensor-panel-web/issues"
+  },
+  "homepage": "https://github.com/apata/sensor-panel-web#readme"
+}
