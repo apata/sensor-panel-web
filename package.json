@@ -19,6 +19,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
+    "prettier": "prettier -c ./src",
     "serve": "npm run build && firebase emulators:start --only hosting",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -27,7 +29,8 @@
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "prettier"
     ]
   },
   "browserslist": {
@@ -50,5 +53,9 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/apata/sensor-panel-web/issues"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^7.1.0",
+    "prettier": "^2.2.1"
   }
 }
