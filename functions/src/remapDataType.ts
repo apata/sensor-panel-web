@@ -28,11 +28,11 @@ const datatypesMap = new Map<string, DataType>([
 ]);
 
 // Provide FE with usable unit and filter system
-const remapDataType = (datatype_id: string): DataType =>
-  datatypesMap.get(datatype_id) || {
-    id: datatype_id,
-    name: datatype_id,
+const remapDataType = (datatypeId: string): DataType =>
+  datatypesMap.get(datatypeId) || {
+    id: datatypeId,
+    name: datatypeId,
     unit: "",
   };
 
-export default remapDataType
+export default remapDataType;

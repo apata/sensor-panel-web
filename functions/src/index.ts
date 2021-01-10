@@ -1,5 +1,5 @@
-import { measurements } from "./getMeasurements";
-import { devices } from "./getDevices";
-import { datatypes } from "./getDataTypes";
+import * as functions from "firebase-functions";
+import app from "./app";
 
-export { measurements, devices, datatypes };
+// Exports the Express app as single Firebase HTTPS function with path /api
+export const api = functions.https.onRequest(app);
