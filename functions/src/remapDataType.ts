@@ -1,6 +1,6 @@
 import DataType from "./models/DataType";
 
-const datatypesMap = new Map<string, DataType>([
+const dataTypesMap = new Map<string, DataType>([
   [
     "dt_temperature_C",
     {
@@ -28,10 +28,10 @@ const datatypesMap = new Map<string, DataType>([
 ]);
 
 // Provide FE with usable unit and filter system
-const remapDataType = (datatypeId: string): DataType =>
-  datatypesMap.get(datatypeId) || {
-    id: datatypeId,
-    name: datatypeId,
+const remapDataType = (dataTypeID: string): DataType =>
+  dataTypesMap.get(dataTypeID) || {
+    id: dataTypeID,
+    name: dataTypeID,
     unit: "",
   };
 
