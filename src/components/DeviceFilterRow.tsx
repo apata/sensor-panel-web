@@ -32,7 +32,7 @@ const DeviceFilterRow = ({
       });
       setDeviceColorMap(colorMap);
     }
-  }, [devices]);
+  }, [devices, setDeviceColorMap]);
 
   return (
     <FlexRowMultiline>
@@ -45,6 +45,7 @@ const DeviceFilterRow = ({
           devices &&
           devices.map((device) => (
             <FilterButton
+              spacing="d1"
               key={device}
               onClick={() => toggleDevice(device)}
               active={selectedDevices.includes(device)}

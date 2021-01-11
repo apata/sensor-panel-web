@@ -1,18 +1,63 @@
 import React from "react";
 import { FlexRowMultiline } from "../elements/Flex";
 import Spacer from "../elements/Spacer";
-import { Heading2, Paragraph } from "../elements/Typography";
+import { Heading2 } from "../elements/Typography";
+import GridContainer from "../elements/GridContainer";
+import "react-datepicker/dist/react-datepicker.css";
+import DateRangeButton from "./DateRangeButton";
+import PremadeTimeRangeButton from "./PremadeTimeRangeButton";
 
-const TimeRangeRow = () => (
-  <FlexRowMultiline>
-    <Heading2>Select time range</Heading2>
-    <Spacer widthSpacing="d2"></Spacer>
+interface TimeRangeRowProps {
+  startTime?: string;
+  setStartTime: React.Dispatch<React.SetStateAction<string | undefined>>;
+  endTime?: string;
+  setEndTime: React.Dispatch<React.SetStateAction<string | undefined>>;
+}
+
+const TimeRangeRow = ({
+  startTime,
+  setStartTime,
+  endTime,
+  setEndTime,
+}: TimeRangeRowProps) => {
+  return (
     <FlexRowMultiline>
-      <Paragraph>Start</Paragraph>
+      <Heading2>Select time range</Heading2>
       <Spacer widthSpacing="d2"></Spacer>
-      <Paragraph>Stop</Paragraph>
+      <GridContainer spacing="d1">
+        <DateRangeButton
+          setTime={setStartTime}
+          time={startTime}
+          buttonLabel="Choose start time"
+          buttonLabelWhenTimeActive="Start:"
+        />
+        <DateRangeButton
+          setTime={setEndTime}
+          time={endTime}
+          buttonLabel="Choose end time"
+          buttonLabelWhenTimeActive="End:"
+        />
+        <PremadeTimeRangeButton
+          setStartTime={setStartTime}
+          setEndTime={setEndTime}
+          label="Last 24h"
+          timeToPrevious={24 * 60 * 60 * 1000}
+        />
+        <PremadeTimeRangeButton
+          setStartTime={setStartTime}
+          setEndTime={setEndTime}
+          label="Last week"
+          timeToPrevious={7 * 24 * 60 * 60 * 1000}
+        />
+        <PremadeTimeRangeButton
+          setStartTime={setStartTime}
+          setEndTime={setEndTime}
+          label="Last month"
+          timeToPrevious={31 * 24 * 60 * 60 * 1000}
+        />
+      </GridContainer>
     </FlexRowMultiline>
-  </FlexRowMultiline>
-);
+  );
+};
 
 export default TimeRangeRow;

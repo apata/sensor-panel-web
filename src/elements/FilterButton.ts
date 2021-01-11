@@ -1,12 +1,17 @@
-import styled from "styled-components";
+import styled, { DefaultTheme } from "styled-components";
 
-const FilterButton = styled.button.attrs({ type: "button" })<{
+interface FilterButtonProps {
   active: boolean;
-}>`
+  spacing?: keyof DefaultTheme["spacing"];
+}
+
+const FilterButton = styled.button.attrs({ type: "button" })<FilterButtonProps>`
   display: flex;
-  margin: ${({ theme }) => theme.spacing.d1}px;
+  margin: ${({ theme, spacing }) =>
+    spacing ? theme.spacing[spacing] + "px" : 0};
   padding: ${({ theme }) => theme.spacing.d1}px
     ${({ theme }) => theme.spacing.d2}px;
+  font-family: inherit;
   font-size: ${({ theme }) => theme.typography.button.fontSize}px;
   font-weight: ${({ theme }) => theme.typography.button.fontWeight};
   line-height: ${({ theme }) => theme.typography.button.lineHeight};

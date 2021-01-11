@@ -18,7 +18,7 @@ const DiagramContainer = styled(FlexColumn)`
   margin: ${({ theme }) => theme.spacing.d2}px;
   width: 100%;
 
-  @media (min-width: 600px) {
+  @media (min-width: 1072px) {
     width: 500px;
   }
 `;
@@ -27,7 +27,6 @@ const DiagramInner = styled.div`
   display: flex;
   flex-grow: 1;
   width: 100%;
-  height: 500px;
   background-color: ${({ theme }) => theme.palette.background.paper};
 `;
 

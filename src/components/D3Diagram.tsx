@@ -31,7 +31,7 @@ class D3Diagram extends React.Component<D3DiagramProps, {}> {
 
     const width = 500;
     const height = 500;
-    const margin = { top: 20, right: 30, bottom: 30, left: 40 };
+    const margin = { top: 16, right: 32, bottom: 32, left: 40 };
 
     const line = d3
       .line()

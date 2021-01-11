@@ -15,13 +15,24 @@ const MainView = () => {
 
   // empty list state means are all selected
   const [selectedDevices, setSelectedDevices] = useState<string[]>([]);
+
+  // undefined time means no filter applied
+  const [startTime, setStartTime] = useState<string | undefined>(undefined);
+  const [endTime, setEndTime] = useState<string | undefined>(undefined);
+
+  // color map determines which device is which color on diagram (key: device, value: rgb())
   const [deviceColorMap, setDeviceColorMap] = useState(
     new Map<string, string>()
   );
 
   return (
-    <FlexColumn>
-      <TimeRangeRow />
+    <FlexColumn style={{ overflowX: "hidden" }}>
+      <TimeRangeRow
+        startTime={startTime}
+        endTime={endTime}
+        setStartTime={setStartTime}
+        setEndTime={setEndTime}
+      />
       <DeviceFilterLogic
         selectedDevices={selectedDevices}
         setSelectedDevices={setSelectedDevices}
@@ -40,7 +51,8 @@ const MainView = () => {
                 queryParams={{
                   dataTypes: [dataType.id],
                   devices: selectedDevices,
-                  startTime: "2020-12-10T23:29:10.169Z",
+                  startTime: startTime,
+                  endTime: endTime,
                 }}
               />
             );

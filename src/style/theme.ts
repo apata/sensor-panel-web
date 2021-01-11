@@ -54,7 +54,7 @@ const theme: DefaultTheme = {
       lineHeight: 1.1,
     },
     h2: {
-      fontSize: 30,
+      fontSize: 20,
       fontWeight: 400,
       lineHeight: 1.2,
     },
