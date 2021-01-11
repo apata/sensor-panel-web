@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import getDevices from "../api/getDevices";
 import DeviceFilterRow from "./DeviceFilterRow";
 import useQuery from "../hooks/useQuery";

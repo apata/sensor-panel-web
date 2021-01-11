@@ -24,6 +24,7 @@ const FilterButton = styled.button.attrs({ type: "button" })<FilterButtonProps>`
     ${({ theme, active }) =>
       active ? theme.palette.primary.main : theme.palette.text.primary};
   outline: none;
+  align-items: center;
 `;
 
 export default FilterButton;
