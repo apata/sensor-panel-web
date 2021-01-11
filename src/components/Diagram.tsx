@@ -1,22 +1,27 @@
 import React, { useMemo } from "react";
 import styled from "styled-components";
 import DataType from "../../functions/src/models/DataType";
+import Measurement from "../../functions/src/models/Measurement";
+import GetMeasurementsParams from "../../functions/src/models/GetMeasurementsParams";
+import D3Diagram from "../components/D3Diagram";
 import useQuery from "../hooks/useQuery";
-import getMeasurements from "../api/getMeasurements";
+import { Query } from "../api/API";
 import { FlexColumn } from "../elements/Flex";
 import { Heading2 } from "../elements/Typography";
+import getMeasurements from "../api/getMeasurements";
 
 interface DiagramProps {
   dataType: DataType;
+  // queryCreator: (dataType: DataType) => Query<Measurement[]>;
+  queryParams: GetMeasurementsParams;
 }
 
 const DiagramContainer = styled(FlexColumn)`
-  border: 1px solid ${({ theme }) => theme.palette.grey["400"]};
   margin: ${({ theme }) => theme.spacing.d2}px;
   width: 100%;
 
   @media (min-width: 600px) {
-    width: 560px;
+    width: 500px;
   }
 `;
 
@@ -28,16 +33,14 @@ const DiagramInner = styled.div`
   background-color: ${({ theme }) => theme.palette.background.paper};
 `;
 
-const Diagram = ({ dataType }: DiagramProps) => {
-  const query = useMemo(() => getMeasurements({ dataTypes: [dataType.id] }), [
-    dataType,
-  ]);
-  // const { responseData: measurements, error, isLoading } =   useQuery({
-  //   query,
-  // });
+const Diagram = ({ dataType, queryParams }: DiagramProps) => {
+  const query = useMemo(() => {
+    return getMeasurements(queryParams);
+  }, [queryParams]);
 
-  useQuery({
+  const { responseData: measurements, error, isLoading } = useQuery({
     query,
+    compare: queryParams,
   });
 
   return (
@@ -45,7 +48,13 @@ const Diagram = ({ dataType }: DiagramProps) => {
       <Heading2>
         {dataType.name} ({dataType.unit})
       </Heading2>
-      <DiagramInner></DiagramInner>
+      <DiagramInner>
+        {isLoading && "Loading data..."}
+        {error && "Failed to load data."}
+        {!isLoading && measurements && (
+          <D3Diagram data={measurements}></D3Diagram>
+        )}
+      </DiagramInner>
     </DiagramContainer>
   );
 };

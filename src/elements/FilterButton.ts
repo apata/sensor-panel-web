@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-const FilterButton = styled.button.attrs({ type: "button" })`
+const FilterButton = styled.button.attrs({ type: "button" })<{
+  active: boolean;
+}>`
   display: flex;
   margin: ${({ theme }) => theme.spacing.d1}px;
   padding: ${({ theme }) => theme.spacing.d1}px
@@ -9,9 +11,14 @@ const FilterButton = styled.button.attrs({ type: "button" })`
   font-weight: ${({ theme }) => theme.typography.button.fontWeight};
   line-height: ${({ theme }) => theme.typography.button.lineHeight};
   border-radius: ${({ theme }) => theme.shapes.borderRadius}px;
-  color: inherit;
-  background-color: inherit;
-  border: 1px solid ${({ theme }) => theme.palette.grey["400"]};
+  color: ${({ theme, active }) =>
+    active ? theme.palette.primary.contrastText : "inherit"};
+  background-color: ${({ theme, active }) =>
+    active ? theme.palette.primary.main : "inherit"};
+  border: 1px solid
+    ${({ theme, active }) =>
+      active ? theme.palette.primary.main : theme.palette.text.primary};
+  outline: none;
 `;
 
 export default FilterButton;

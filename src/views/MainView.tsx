@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useCallback, useMemo, useState } from "react";
+import DataType from "../../functions/src/models/DataType";
 import getDataTypes from "../api/getDataTypes";
+import getMeasurements from "../api/getMeasurements";
 import DeviceFilterRow from "../components/DeviceFilterRow";
 import Diagram from "../components/Diagram";
 import TimeRangeRow from "../components/TimeRangeRow";
@@ -12,17 +14,48 @@ const MainView = () => {
   const { responseData: dataTypes, error, isLoading } = useQuery({
     query: getDataTypes,
   });
+
+  // undefined state means are all selected
+  const [selectedDevices, setSelectedDevices] = useState<string[]>([]);
+
+  const toggleDevice = (device: string) =>
+    setSelectedDevices((currentSelectedDevices) => {
+      if (!currentSelectedDevices.length) {
+        return [device];
+      } else {
+        if (currentSelectedDevices.includes(device)) {
+          return currentSelectedDevices.filter((d) => d !== device);
+        } else {
+          return [...currentSelectedDevices, device];
+        }
+      }
+    });
+
   return (
     <FlexColumn>
       <TimeRangeRow />
-      <DeviceFilterRow />
+      <DeviceFilterRow
+        selectedDevices={selectedDevices}
+        toggleDevice={toggleDevice}
+      />
       {isLoading && <Label>Loading data types...</Label>}
       {error && <Label>Error loading data types.</Label>}
-      {dataTypes && (
+      {!isLoading && dataTypes && (
         <GridContainer spacing="d2">
-          {dataTypes.map((dataType) => (
-            <Diagram key={dataType.id} dataType={dataType} />
-          ))}
+          {dataTypes.map((dataType) => {
+            debugger;
+            return (
+              <Diagram
+                key={dataType.id}
+                dataType={dataType}
+                queryParams={{
+                  dataTypes: [dataType.id],
+                  devices: selectedDevices,
+                  startTime: "2020-12-10T23:29:10.169Z",
+                }}
+              />
+            );
+          })}
         </GridContainer>
       )}
     </FlexColumn>

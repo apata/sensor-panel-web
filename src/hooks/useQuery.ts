@@ -1,5 +1,11 @@
 import { Query } from "../api/API";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 
 interface UseQueryProps<ResponsePayloadType> {
   query: Query<ResponsePayloadType>;
@@ -15,24 +21,39 @@ const useQuery = <ResponsePayloadType>({
   const [responseData, setResponseData] = useState<
     ResponsePayloadType | undefined
   >(undefined);
-  const abortController = useRef(new AbortController());
-
-  const makeQuery = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const res = await query({ signal: abortController.current.signal });
-      setResponseData(res);
-      setIsLoading(false);
-    } catch (e) {
-      setError(e);
-      setIsLoading(false);
-    }
-  }, [query]);
+  const isMounted = useRef(false);
+  useLayoutEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   useEffect(() => {
+    const abortController = new AbortController();
+    const makeQuery = async () => {
+      console.log("makeQuery run", query, compare);
+      setIsLoading(true);
+      try {
+        const res = await query({ signal: abortController.signal });
+        if (isMounted) {
+          setResponseData(res);
+          setIsLoading(false);
+          setError(undefined);
+        }
+      } catch (e) {
+        if (isMounted) {
+          setError(e);
+          setIsLoading(false);
+        }
+      }
+    };
+
     makeQuery();
-    return abortController.current.abort;
-  }, [makeQuery, compare]);
+    return () => {
+      abortController.abort();
+    };
+  }, [query, compare]);
 
   return { isLoading, error, responseData };
 };
