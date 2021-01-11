@@ -1,11 +1,5 @@
 import { Query } from "../api/API";
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 interface UseQueryProps<ResponsePayloadType> {
   query: Query<ResponsePayloadType>;
@@ -32,7 +26,6 @@ const useQuery = <ResponsePayloadType>({
   useEffect(() => {
     const abortController = new AbortController();
     const makeQuery = async () => {
-      console.log("makeQuery run", query, compare);
       setIsLoading(true);
       try {
         const res = await query({ signal: abortController.signal });

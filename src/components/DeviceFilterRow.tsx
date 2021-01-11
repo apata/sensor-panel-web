@@ -27,7 +27,8 @@ const DeviceFilterRow = ({
       <GridContainer spacing="d1">
         {isLoading && <Label>Loading devices...</Label>}
         {error && <Label>Failed to load devices.</Label>}
-        {!!devices &&
+        {!isLoading &&
+          devices &&
           devices.map((device) => (
             <FilterButton
               key={device}

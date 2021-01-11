@@ -1,7 +1,5 @@
-import React, { useCallback, useMemo, useState } from "react";
-import DataType from "../../functions/src/models/DataType";
+import React, { useState } from "react";
 import getDataTypes from "../api/getDataTypes";
-import getMeasurements from "../api/getMeasurements";
 import DeviceFilterRow from "../components/DeviceFilterRow";
 import Diagram from "../components/Diagram";
 import TimeRangeRow from "../components/TimeRangeRow";
@@ -15,7 +13,7 @@ const MainView = () => {
     query: getDataTypes,
   });
 
-  // undefined state means are all selected
+  // empty list state means are all selected
   const [selectedDevices, setSelectedDevices] = useState<string[]>([]);
 
   const toggleDevice = (device: string) =>
@@ -43,7 +41,6 @@ const MainView = () => {
       {!isLoading && dataTypes && (
         <GridContainer spacing="d2">
           {dataTypes.map((dataType) => {
-            debugger;
             return (
               <Diagram
                 key={dataType.id}
