@@ -1,18 +1,11 @@
 import { stringify } from "qs";
-
-interface GetRequestProps<RequestParamsType> {
-  path: string;
-  params?: RequestParamsType;
-}
-
-export type Query<ResponsePayloadType> = (
-  init?: RequestInit
-) => Promise<ResponsePayloadType>;
+import GetRequestProps from "./models/GetRequestProps";
+import QueryModel from "./models/QueryModel";
 
 export function getJson<RequestParamsType, ResponsePayloadType>({
   path,
   params,
-}: GetRequestProps<RequestParamsType>): Query<ResponsePayloadType> {
+}: GetRequestProps<RequestParamsType>): QueryModel<ResponsePayloadType> {
   return async (init?: RequestInit): Promise<ResponsePayloadType> => {
     try {
       const res = await fetch(`${path}?${stringify(params)}`, init);

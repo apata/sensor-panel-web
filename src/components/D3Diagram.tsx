@@ -4,6 +4,7 @@ import Measurement from "../../functions/src/models/Measurement";
 
 interface D3DiagramProps {
   data: Measurement[];
+  deviceColorMap: Map<string, string>;
 }
 
 class D3Diagram extends React.Component<D3DiagramProps, {}> {
@@ -72,21 +73,18 @@ class D3Diagram extends React.Component<D3DiagramProps, {}> {
 
       svg.append("g").call(yAxis);
 
-      let iterator = dataSortedByDevice.entries();
-      let i = 0;
-      while (i < dataSortedByDevice.size) {
+      dataSortedByDevice.forEach((d, id) => {
         svg
           .append("path")
-          .datum(iterator.next().value[1])
+          .datum(d as any)
           .attr("fill", "none")
-          .attr("fill", "none")
-          .attr("stroke", d3.schemeCategory10[i])
+          .attr("stroke", this.props.deviceColorMap.get(id) || "#000")
           .attr("stroke-width", 1.5)
           .attr("stroke-linejoin", "round")
           .attr("stroke-linecap", "round")
           .attr("d", line);
-        i++;
-      }
+      });
+
       return svg.node();
     };
 
@@ -99,4 +97,5 @@ class D3Diagram extends React.Component<D3DiagramProps, {}> {
     );
   }
 }
+
 export default D3Diagram;

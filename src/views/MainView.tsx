@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import getDataTypes from "../api/getDataTypes";
-import DeviceFilterRow from "../components/DeviceFilterRow";
+import DeviceFilterLogic from "../components/DeviceFilterLogic";
 import Diagram from "../components/Diagram";
 import TimeRangeRow from "../components/TimeRangeRow";
 import { FlexColumn } from "../elements/Flex";
@@ -15,26 +15,17 @@ const MainView = () => {
 
   // empty list state means are all selected
   const [selectedDevices, setSelectedDevices] = useState<string[]>([]);
-
-  const toggleDevice = (device: string) =>
-    setSelectedDevices((currentSelectedDevices) => {
-      if (!currentSelectedDevices.length) {
-        return [device];
-      } else {
-        if (currentSelectedDevices.includes(device)) {
-          return currentSelectedDevices.filter((d) => d !== device);
-        } else {
-          return [...currentSelectedDevices, device];
-        }
-      }
-    });
+  const [deviceColorMap, setDeviceColorMap] = useState(
+    new Map<string, string>()
+  );
 
   return (
     <FlexColumn>
       <TimeRangeRow />
-      <DeviceFilterRow
+      <DeviceFilterLogic
         selectedDevices={selectedDevices}
-        toggleDevice={toggleDevice}
+        setSelectedDevices={setSelectedDevices}
+        setDeviceColorMap={setDeviceColorMap}
       />
       {isLoading && <Label>Loading data types...</Label>}
       {error && <Label>Error loading data types.</Label>}
@@ -43,6 +34,7 @@ const MainView = () => {
           {dataTypes.map((dataType) => {
             return (
               <Diagram
+                deviceColorMap={deviceColorMap}
                 key={dataType.id}
                 dataType={dataType}
                 queryParams={{

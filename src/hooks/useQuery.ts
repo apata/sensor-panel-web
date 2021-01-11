@@ -1,10 +1,5 @@
-import { Query } from "../api/API";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-
-interface UseQueryProps<ResponsePayloadType> {
-  query: Query<ResponsePayloadType>;
-  compare?: any;
-}
+import UseQueryProps from "../api/models/UseQueryProps";
 
 const useQuery = <ResponsePayloadType>({
   query,

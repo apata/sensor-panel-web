@@ -11,6 +11,7 @@ import getMeasurements from "../api/getMeasurements";
 interface DiagramProps {
   dataType: DataType;
   queryParams: GetMeasurementsParams;
+  deviceColorMap: Map<string, string>;
 }
 
 const DiagramContainer = styled(FlexColumn)`
@@ -30,7 +31,7 @@ const DiagramInner = styled.div`
   background-color: ${({ theme }) => theme.palette.background.paper};
 `;
 
-const Diagram = ({ dataType, queryParams }: DiagramProps) => {
+const Diagram = ({ dataType, queryParams, deviceColorMap }: DiagramProps) => {
   const query = useMemo(() => {
     return getMeasurements(queryParams);
   }, [queryParams]);
@@ -49,7 +50,10 @@ const Diagram = ({ dataType, queryParams }: DiagramProps) => {
         {isLoading && "Loading data..."}
         {error && "Failed to load data."}
         {!isLoading && measurements && (
-          <D3Diagram data={measurements}></D3Diagram>
+          <D3Diagram
+            data={measurements}
+            deviceColorMap={deviceColorMap}
+          ></D3Diagram>
         )}
       </DiagramInner>
     </DiagramContainer>
