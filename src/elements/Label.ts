@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const FilterButton = styled.button.attrs({ type: "button" })`
+const Label = styled.div`
   display: flex;
   margin: ${({ theme }) => theme.spacing.d1}px;
   padding: ${({ theme }) => theme.spacing.d1}px
@@ -9,9 +9,6 @@ const FilterButton = styled.button.attrs({ type: "button" })`
   font-weight: ${({ theme }) => theme.typography.button.fontWeight};
   line-height: ${({ theme }) => theme.typography.button.lineHeight};
   border-radius: ${({ theme }) => theme.shapes.borderRadius}px;
-  color: inherit;
-  background-color: inherit;
-  border: 1px solid ${({ theme }) => theme.palette.grey["400"]};
 `;
 
-export default FilterButton;
+export default Label;

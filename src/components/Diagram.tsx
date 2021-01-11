@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
+import DataType from "../../functions/src/models/DataType";
+import useQuery from "../hooks/useQuery";
+import getMeasurements from "../api/getMeasurements";
 import { FlexColumn } from "../elements/Flex";
 import { Heading2 } from "../elements/Typography";
 
 interface DiagramProps {
-  title: string;
+  dataType: DataType;
 }
 
 const DiagramContainer = styled(FlexColumn)`
@@ -25,11 +28,26 @@ const DiagramInner = styled.div`
   background-color: ${({ theme }) => theme.palette.background.paper};
 `;
 
-const Diagram = ({ title }: DiagramProps) => (
-  <DiagramContainer>
-    <Heading2>{title}</Heading2>
-    <DiagramInner></DiagramInner>
-  </DiagramContainer>
-);
+const Diagram = ({ dataType }: DiagramProps) => {
+  const query = useMemo(() => getMeasurements({ dataTypes: [dataType.id] }), [
+    dataType,
+  ]);
+  // const { responseData: measurements, error, isLoading } =   useQuery({
+  //   query,
+  // });
+
+  useQuery({
+    query,
+  });
+
+  return (
+    <DiagramContainer>
+      <Heading2>
+        {dataType.name} ({dataType.unit})
+      </Heading2>
+      <DiagramInner></DiagramInner>
+    </DiagramContainer>
+  );
+};
 
 export default Diagram;
