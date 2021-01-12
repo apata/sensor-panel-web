@@ -8,6 +8,14 @@
 		"node8DeploysDisabledAfter": 1613390400000,
 		"node8RuntimeDisabledAfter": 1615809600000,
 		"node8WarnAfter": 1600128000000,
-		"fetched": 1610065824672
+		"fetched": 1610442822251
+	},
+	"usage": false,
+	"adminsdkconfig": {
+		"sensor-panel": {
+			"projectId": "sensor-panel",
+			"storageBucket": "sensor-panel.appspot.com",
+			"locationId": "europe-west"
+		}
 	}
 }

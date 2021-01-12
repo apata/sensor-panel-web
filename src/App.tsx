@@ -1,5 +1,6 @@
 import React from "react";
 import { ThemeProvider } from "styled-components";
+import SensorSimulator from "./components/SensorSimulator";
 import ViewContainer from "./elements/ViewContainer";
 import DatePickerStyle from "./style/DatePickerStyle";
 import GlobalStyle from "./style/GlobalStyle";
@@ -14,6 +15,7 @@ const App = () => (
     <DatePickerStyle />
     <ViewContainer>
       <MainView />
+      <SensorSimulator />
     </ViewContainer>
   </ThemeProvider>
 );

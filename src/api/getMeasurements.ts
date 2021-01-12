@@ -1,9 +1,9 @@
 import { getJson } from "./API";
 import GetMeasurementsParams from "../../functions/src/models/GetMeasurementsParams";
-import Measurement from "../../functions/src/models/Measurement";
+import { MeasurementsByDevice } from "../../functions/src/models/MeasurementsByDevice";
 
 const getMeasurements = (params: GetMeasurementsParams) =>
-  getJson<GetMeasurementsParams, Measurement[]>({
+  getJson<GetMeasurementsParams, MeasurementsByDevice>({
     path: "/api/measurements",
     params,
   });

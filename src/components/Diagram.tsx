@@ -43,7 +43,7 @@ const Diagram = ({ dataType, queryParams, deviceColorMap }: DiagramProps) => {
   return (
     <DiagramContainer>
       <Heading2>
-        {dataType.name} ({dataType.unit})
+        {dataType.name} (unit: {dataType.unit})
       </Heading2>
       <DiagramInner>
         {isLoading && "Loading data..."}

@@ -1,9 +1,10 @@
 import React from "react";
 import * as d3 from "d3";
 import Measurement from "../../functions/src/models/Measurement";
+import { MeasurementsByDevice } from "../../functions/src/models/MeasurementsByDevice";
 
 interface D3DiagramProps {
-  data: Measurement[];
+  data: MeasurementsByDevice;
   deviceColorMap: Map<string, string>;
 }
 
@@ -16,43 +17,55 @@ class D3Diagram extends React.Component<D3DiagramProps, {}> {
   d3Ref: React.RefObject<HTMLDivElement>;
 
   componentDidMount() {
-    const data = this.props.data;
-    let dataSortedByDevice = new Map<string, Measurement[]>();
-
-    data.forEach((d) => {
-      const id = d.device.guid;
-      if (dataSortedByDevice.has(id)) {
-        // non-null assertion ! due to .has(id) above
-        dataSortedByDevice.get(id)!.push(d);
-      } else {
-        dataSortedByDevice.set(id, [d]);
-      }
-    });
+    const { data } = this.props;
 
     const width = 500;
     const height = 500;
     const margin = { top: 16, right: 32, bottom: 32, left: 40 };
 
     const line = d3
-      .line()
-      .x((d) => x(new Date(((d as unknown) as Measurement).timestamp)))
-      .y((d) => y(((d as unknown) as Measurement).value));
+      .line<Measurement>()
+      .x((d) => x(new Date(d.timestamp)))
+      .y((d) => y(d.value));
+
+    const yMin = d3.min(
+      data.map(
+        ([_, measurements]) => d3.min(measurements, (d) => d.value) as number
+      )
+    )!;
+
+    const yMax = d3.max(
+      data.map(
+        ([_, measurements]) => d3.max(measurements, (d) => d.value) as number
+      )
+    )!;
 
     const y = d3
       .scaleLinear()
-      .domain([
-        d3.min(data, (d) => d.value) as number,
-        d3.max(data, (d) => d.value) as number,
-      ])
+      .domain([yMin, yMax])
       .nice()
       .range([height - margin.bottom, margin.top]);
 
     const yAxis = (g: any) =>
       g.attr("transform", `translate(${margin.left},0)`).call(d3.axisLeft(y));
 
+    const xMin = d3.min(
+      data.map(
+        ([_, measurements]) =>
+          d3.min(measurements, (d) => new Date(d.timestamp)) as Date
+      )
+    )!;
+
+    const xMax = d3.max(
+      data.map(
+        ([_, measurements]) =>
+          d3.max(measurements, (d) => new Date(d.timestamp)) as Date
+      )
+    )!;
+
     const x = d3
       .scaleUtc()
-      .domain(d3.extent(data, (d) => new Date(d.timestamp)) as [Date, Date])
+      .domain([xMin, xMax])
       .range([margin.left, width - margin.right]);
 
     const xAxis = (g: any) =>
@@ -73,12 +86,12 @@ class D3Diagram extends React.Component<D3DiagramProps, {}> {
 
       svg.append("g").call(yAxis);
 
-      dataSortedByDevice.forEach((d, id) => {
+      data.forEach(([deviceID, measurements]) => {
         svg
           .append("path")
-          .datum(d as any)
+          .datum(measurements)
           .attr("fill", "none")
-          .attr("stroke", this.props.deviceColorMap.get(id) || "#000")
+          .attr("stroke", this.props.deviceColorMap.get(deviceID) || "#000")
           .attr("stroke-width", 1.5)
           .attr("stroke-linejoin", "round")
           .attr("stroke-linecap", "round")

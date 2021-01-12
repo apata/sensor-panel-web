@@ -9,6 +9,10 @@ firebase-debug.*.log*
 
 # Firebase cache
 .firebase/
+emulator-export*/
+
+.ash_history
+.bash_history
 
 # Firebase config
 

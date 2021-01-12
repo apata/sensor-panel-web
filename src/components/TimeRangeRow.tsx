@@ -46,13 +46,13 @@ const TimeRangeRow = ({
         <PremadeTimeRangeButton
           setStartTime={setStartTime}
           setEndTime={setEndTime}
-          label="Last week"
+          label="Last 7 days"
           timeToPrevious={7 * 24 * 60 * 60 * 1000}
         />
         <PremadeTimeRangeButton
           setStartTime={setStartTime}
           setEndTime={setEndTime}
-          label="Last month"
+          label="Last 30 days"
           timeToPrevious={31 * 24 * 60 * 60 * 1000}
         />
       </GridContainer>

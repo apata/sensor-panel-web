@@ -1,0 +1,20 @@
+version: "3.9"
+
+# docker run -i -p 9005:9005 -p 9000:9000 -p 8085:8085 -p 8080:8080 -p 5001:5001 -p 5000:5000 -p 4000:4000 -v $(pwd):/home/node andreysenov/firebase-tools
+
+services:
+  emulators:
+    image: apata/firebase-tools:9.1.2-node12-alpine
+    ports:
+      - "9005:9005"
+      - "9000:9000"
+      - "8085:8085"
+      - "8080:8080"
+      - "5001:5001"
+      - "5000:5000"
+      - "4000:4000"
+      - "3000:3000" # for webpack dev server
+    volumes:
+      - ./:/home/node
+    # tty: true
+    command: tail -F anything
