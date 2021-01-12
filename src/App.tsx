@@ -15,7 +15,7 @@ const App = () => (
     <DatePickerStyle />
     <ViewContainer>
       <MainView />
-      <SensorSimulator />
+      {process.env.NODE_ENV !== "production" ? <SensorSimulator /> : <></>}
     </ViewContainer>
   </ThemeProvider>
 );
