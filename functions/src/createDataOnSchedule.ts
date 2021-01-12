@@ -1,8 +1,9 @@
 import { logger } from "firebase-functions";
 import fetch from "node-fetch";
-import generateData from "../../src/api/generateData";
+import generateData from "./generateData";
 
-const ENDPOINT_URL = "http://localhost:5001/sensor-panel/us-central1/api/sink";
+const ENDPOINT_URL =
+  "https://sensor-panel.web.app/sensor-panel/us-central1/app/api/sink";
 
 const createDataOnSchedule = async () => {
   logger.debug("creating data");
