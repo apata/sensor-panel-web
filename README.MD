@@ -78,3 +78,9 @@ The production command builds the FE, BE production versions and emulates the wh
 - FE is at http://localhost:5000
 - BE is at http://localhost:5001/sensor-panel/us-central1/
 - Emulator panel with Firestore panel is at http://localhost:4000
+
+### API
+
+#### POST /api/sink
+
+Accepts `application/json` in format as defined [here](./functions/src/models/SinkPayload.ts).

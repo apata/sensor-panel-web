@@ -79,7 +79,7 @@ const generateData = () => {
   const randomIndex = Math.floor(Math.random() * weightedDeviceList.length);
   const randomDevice = weightedDeviceList[randomIndex];
 
-  const now = Date.now() / 1000; // transform to unix seconds instead of JS milliseconds ;
+  const now = Date.now() / 1000; // transform to unix seconds instead of JS milliseconds
 
   const data = {
     source: randomDevice,
