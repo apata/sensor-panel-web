@@ -40,6 +40,12 @@ const TimeRangeRow = ({
         <PremadeTimeRangeButton
           setStartTime={setStartTime}
           setEndTime={setEndTime}
+          label="Last 1h"
+          timeToPrevious={60 * 60 * 1000}
+        />
+        <PremadeTimeRangeButton
+          setStartTime={setStartTime}
+          setEndTime={setEndTime}
           label="Last 24h"
           timeToPrevious={24 * 60 * 60 * 1000}
         />

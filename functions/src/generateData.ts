@@ -38,40 +38,40 @@ const generateData = () => {
       "70B3D5E390001000",
       {
         dt_co2_ppm: sineFnFactory(40, 150, 0),
-        dt_temperature_C: sineFnFactory(-10, 20, 0),
-        dt_humidity_pct: sineFnFactory(0, 75, 0),
+        dt_temperature_C: sineFnFactory(-10, 20, 0.8),
+        dt_humidity_pct: sineFnFactory(0, 75, 0.32),
       },
     ],
     [
       "70B3D5E390001111",
       {
-        dt_co2_ppm: sineFnFactory(200, 250, 0.1),
-        dt_temperature_C: sineFnFactory(17, 25, 0.1),
-        dt_humidity_pct: sineFnFactory(50, 75, 0.1),
+        dt_co2_ppm: sineFnFactory(200, 250, 0.21),
+        dt_temperature_C: sineFnFactory(17, 25, 0.38),
+        dt_humidity_pct: sineFnFactory(50, 75, 0.15),
       },
     ],
     [
       "70B3D5E390001112",
       {
-        dt_co2_ppm: sineFnFactory(0, 25, 0.4),
-        dt_temperature_C: sineFnFactory(-10, 10, 0.4),
-        dt_humidity_pct: sineFnFactory(0, 100, 0.4),
+        dt_co2_ppm: sineFnFactory(0, 25, 0.42),
+        dt_temperature_C: sineFnFactory(-10, 10, 0.33),
+        dt_humidity_pct: sineFnFactory(0, 100, 0.2),
       },
     ],
     [
       "70B3D5E390001113",
       {
         dt_co2_ppm: sineFnFactory(50, 200, 0.7),
-        dt_temperature_C: sineFnFactory(5, 15, 0.7),
-        dt_humidity_pct: sineFnFactory(0, 10, 0.7),
+        dt_temperature_C: sineFnFactory(5, 15, 0.11),
+        dt_humidity_pct: sineFnFactory(0, 10, 0.9),
       },
     ],
     [
       "70B3D5E390001114",
       {
         dt_co2_ppm: sineFnFactory(0, 100, 0.25),
-        dt_temperature_C: sineFnFactory(10, 15, 0.25),
-        dt_humidity_pct: sineFnFactory(50, 60, 0.25),
+        dt_temperature_C: sineFnFactory(10, 15, 0.1),
+        dt_humidity_pct: sineFnFactory(50, 60, 0.55),
       },
     ],
   ]);
