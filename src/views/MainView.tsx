@@ -38,9 +38,11 @@ const MainView = () => {
         setSelectedDevices={setSelectedDevices}
         setDeviceColorMap={setDeviceColorMap}
       />
-      {isLoading && <Label>Loading data types...</Label>}
-      {error && <Label>Error loading data types.</Label>}
-      {!isLoading && dataTypes && (
+      {isLoading ? (
+        <Label>Loading data types...</Label>
+      ) : error ? (
+        <Label>Error loading data types.</Label>
+      ) : dataTypes && dataTypes.length ? (
         <GridContainer spacing="d2">
           {dataTypes.map((dataType) => {
             return (
@@ -58,6 +60,8 @@ const MainView = () => {
             );
           })}
         </GridContainer>
+      ) : (
+        <Label>No data types found.</Label>
       )}
     </FlexColumn>
   );

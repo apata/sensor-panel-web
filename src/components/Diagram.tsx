@@ -37,7 +37,6 @@ const Diagram = ({ dataType, queryParams, deviceColorMap }: DiagramProps) => {
 
   const { responseData: measurements, error, isLoading } = useQuery({
     query,
-    compare: queryParams,
   });
 
   return (
@@ -46,13 +45,14 @@ const Diagram = ({ dataType, queryParams, deviceColorMap }: DiagramProps) => {
         {dataType.name} (unit: {dataType.unit})
       </Heading2>
       <DiagramInner>
-        {isLoading && "Loading data..."}
-        {error && "Failed to load data."}
-        {!isLoading && measurements && (
-          <D3Diagram
-            data={measurements}
-            deviceColorMap={deviceColorMap}
-          ></D3Diagram>
+        {isLoading ? (
+          "Loading data..."
+        ) : error ? (
+          "Failed to load data."
+        ) : measurements && measurements.length ? (
+          <D3Diagram data={measurements} deviceColorMap={deviceColorMap} />
+        ) : (
+          "No data to display."
         )}
       </DiagramInner>
     </DiagramContainer>

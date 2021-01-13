@@ -22,17 +22,17 @@ const useQuery = <ResponsePayloadType>({
     const abortController = new AbortController();
     const makeQuery = async () => {
       setIsLoading(true);
+      setError(undefined);
       try {
         const res = await query({ signal: abortController.signal });
         if (isMounted) {
           setResponseData(res);
-          setIsLoading(false);
           setError(undefined);
+          setIsLoading(false);
         }
       } catch (e) {
         if (isMounted) {
           setError(e);
-          setIsLoading(false);
         }
       }
     };
@@ -40,6 +40,9 @@ const useQuery = <ResponsePayloadType>({
     makeQuery();
     return () => {
       abortController.abort();
+      if (isMounted) {
+        setIsLoading(false);
+      }
     };
   }, [query, compare]);
 

@@ -44,10 +44,11 @@ const DeviceFilterRow = ({
       <Heading2>Filter by devices</Heading2>
       <Spacer widthSpacing="d2" />
       <GridContainer spacing="d1">
-        {isLoading && <Label>Loading devices...</Label>}
-        {error && <Label>Failed to load devices.</Label>}
-        {!isLoading &&
-          devices &&
+        {isLoading ? (
+          <Label>Loading devices...</Label>
+        ) : error ? (
+          <Label>Failed to load devices.</Label>
+        ) : devices && devices.length ? (
           devices.map((device) => {
             const isActive = selectedDevices.includes(device);
             return (
@@ -64,7 +65,10 @@ const DeviceFilterRow = ({
                 />
               </FilterButton>
             );
-          })}
+          })
+        ) : (
+          <Label>No devices loaded.</Label>
+        )}
       </GridContainer>
     </FlexRowMultiline>
   );
