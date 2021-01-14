@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   emulators:
-    image: apata/firebase-tools:9.1.2-node12
+    image: apata/firebase-tools:9.2.0-node12
     ports:
       - "9005:9005"
       - "9000:9000"
