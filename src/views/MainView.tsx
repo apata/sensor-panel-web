@@ -38,31 +38,33 @@ const MainView = () => {
         setSelectedDevices={setSelectedDevices}
         setDeviceColorMap={setDeviceColorMap}
       />
-      {isLoading ? (
-        <Label>Loading data types...</Label>
-      ) : error ? (
-        <Label>Error loading data types.</Label>
-      ) : dataTypes && dataTypes.length ? (
-        <GridContainer spacing="d2">
-          {dataTypes.map((dataType) => {
-            return (
-              <Diagram
-                deviceColorMap={deviceColorMap}
-                key={dataType.id}
-                dataType={dataType}
-                queryParams={{
-                  dataTypes: [dataType.id],
-                  devices: selectedDevices,
-                  startTime: startTime,
-                  endTime: endTime,
-                }}
-              />
-            );
-          })}
-        </GridContainer>
-      ) : (
-        <Label>No data types found.</Label>
-      )}
+      <GridContainer spacing="d2">
+        {isLoading ? (
+          <Label>Loading data types...</Label>
+        ) : error ? (
+          <Label>Error loading data types.</Label>
+        ) : dataTypes && dataTypes.length ? (
+          <>
+            {dataTypes.map((dataType) => {
+              return (
+                <Diagram
+                  deviceColorMap={deviceColorMap}
+                  key={dataType.id}
+                  dataType={dataType}
+                  queryParams={{
+                    dataTypes: [dataType.id],
+                    devices: selectedDevices,
+                    startTime: startTime,
+                    endTime: endTime,
+                  }}
+                />
+              );
+            })}
+          </>
+        ) : (
+          <Label>No data types found.</Label>
+        )}
+      </GridContainer>
     </FlexColumn>
   );
 };

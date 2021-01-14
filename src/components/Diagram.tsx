@@ -7,6 +7,7 @@ import useQuery from "../hooks/useQuery";
 import { FlexColumn } from "../elements/Flex";
 import { Heading2 } from "../elements/Typography";
 import getMeasurements from "../api/getMeasurements";
+import measurementsContainDataPoints from "./measurementsContainDataPoints";
 
 interface DiagramProps {
   dataType: DataType;
@@ -49,7 +50,9 @@ const Diagram = ({ dataType, queryParams, deviceColorMap }: DiagramProps) => {
           "Loading data..."
         ) : error ? (
           "Failed to load data."
-        ) : measurements && measurements.length ? (
+        ) : measurements &&
+          measurements.length &&
+          measurementsContainDataPoints(measurements) ? (
           <D3Diagram data={measurements} deviceColorMap={deviceColorMap} />
         ) : (
           "No data to display."

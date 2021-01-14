@@ -22,7 +22,6 @@ const useQuery = <ResponsePayloadType>({
     const abortController = new AbortController();
     const makeQuery = async () => {
       setIsLoading(true);
-      setError(undefined);
       try {
         const res = await query({ signal: abortController.signal });
         if (isMounted) {
@@ -33,6 +32,11 @@ const useQuery = <ResponsePayloadType>({
       } catch (e) {
         if (isMounted) {
           setError(e);
+          // HACK: without this check, setIsLoading will never be set to
+          // true again if request fails for other reasons than abort
+          if (!abortController.signal.aborted) {
+            setIsLoading(false);
+          }
         }
       }
     };
