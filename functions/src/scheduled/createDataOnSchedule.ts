@@ -1,6 +1,6 @@
 import { logger } from "firebase-functions";
 import fetch from "node-fetch";
-import generateData from "./generateData";
+import generateData from "../utils/generateData";
 
 const ENDPOINT_URL = "https://sensor-panel.web.app/api/sink";
 

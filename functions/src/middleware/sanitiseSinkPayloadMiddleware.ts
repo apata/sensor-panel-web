@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { logger } from "firebase-functions";
-import sanitiseSinkPayload from "../sanitiseSinkPayload";
+import sanitiseSinkPayload from "../utils/sanitiseSinkPayload";
 
 const sanitiseSinkPayloadMiddleware: RequestHandler = (
   request,

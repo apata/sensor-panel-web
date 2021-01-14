@@ -1,9 +1,9 @@
 import * as express from "express";
 
-import getMeasurements from "./getMeasurements";
-import getDevices from "./getDevices";
-import getDataTypes from "./getDataTypes";
-import postSink from "./postSink";
+import getMeasurements from "./endpoints/getMeasurements";
+import getDevices from "./endpoints/getDevices";
+import getDataTypes from "./endpoints/getDataTypes";
+import postSink from "./endpoints/postSink";
 import sanitiseSinkPayloadMiddleware from "./middleware/sanitiseSinkPayloadMiddleware";
 import createDeviceDocumentMiddleware from "./middleware/createDeviceDocumentMiddleware";
 

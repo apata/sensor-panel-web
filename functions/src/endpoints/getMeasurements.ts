@@ -1,10 +1,10 @@
 import { RequestHandler } from "express";
 import { logger } from "firebase-functions";
-import db from "./dbConnector";
-import GetMeasurementsParams from "./models/GetMeasurementsParams";
-import { MeasurementsByDevice } from "./models/MeasurementsByDevice";
-import SensorValuePayload from "./models/SensorValuePayload";
-import transformSensorValueToMeasurement from "./transformSensorValueToMeasurement";
+import db from "../dbConnector";
+import GetMeasurementsParams from "../models/GetMeasurementsParams";
+import { MeasurementsByDevice } from "../models/MeasurementsByDevice";
+import SensorValuePayload from "../models/SensorValuePayload";
+import transformSensorValueToMeasurement from "../utils/transformSensorValueToMeasurement";
 
 const attachFiltersToMeasurementsRef = (
   measurementsRef: FirebaseFirestore.CollectionReference<FirebaseFirestore.DocumentData>,

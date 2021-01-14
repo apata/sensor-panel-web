@@ -1,5 +1,5 @@
-import Measurement from "./models/Measurement";
-import SensorValuePayload from "./models/SensorValuePayload";
+import Measurement from "../models/Measurement";
+import SensorValuePayload from "../models/SensorValuePayload";
 
 const transformSensorValueToMeasurement = (
   sensorValue: SensorValuePayload,

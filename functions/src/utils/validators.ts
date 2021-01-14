@@ -1,4 +1,4 @@
-import ValidationError from "./models/ValidationError";
+import ValidationError from "../models/ValidationError";
 
 type ValidatorFunction = (
   valueToValidate: any

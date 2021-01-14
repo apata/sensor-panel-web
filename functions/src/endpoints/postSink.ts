@@ -1,8 +1,8 @@
 import { RequestHandler } from "express";
-import db from "./dbConnector";
+import db from "../dbConnector";
 import { logger } from "firebase-functions";
-import SinkPayload from "./models/SinkPayload";
-import ValidationError from "./models/ValidationError";
+import SinkPayload from "../models/SinkPayload";
+import ValidationError from "../models/ValidationError";
 
 /*
   POST /sink

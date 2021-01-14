@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { logger } from "firebase-functions";
-import db from "./dbConnector";
+import db from "../dbConnector";
 
 /* 
   GET /devices

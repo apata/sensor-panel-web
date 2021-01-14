@@ -1,4 +1,4 @@
-import DataType from "./models/DataType";
+import DataType from "../models/DataType";
 
 const dataTypesMap = new Map<string, DataType>([
   [

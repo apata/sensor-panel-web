@@ -1,6 +1,6 @@
-import SensorValuePayload from "./models/SensorValuePayload";
-import SinkPayload from "./models/SinkPayload";
-import ValidationError from "./models/ValidationError";
+import SensorValuePayload from "../models/SensorValuePayload";
+import SinkPayload from "../models/SinkPayload";
+import ValidationError from "../models/ValidationError";
 import {
   validateArray,
   validateDeviceEUI64,

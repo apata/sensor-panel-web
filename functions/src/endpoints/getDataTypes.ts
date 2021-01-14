@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import remapDataType from "./remapDataType";
+import remapDataType from "../utils/remapDataType";
 
 /* 
   GET /data-types
