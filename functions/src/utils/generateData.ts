@@ -1,8 +1,15 @@
 const sineFnFactory = (min: number, max: number, offset: number) => {
-  return (t: number) =>
-    (Math.sin(t / 1000 + offset + Math.random() / 10) * (max - min)) / 2 +
-    min +
-    (max - min) / 2;
+  // eslint-disable-next-line require-jsdoc
+  function* sineFn() {
+    const halfDomain = (max - min) / 2;
+    while (true) {
+      yield Math.sin(Date.now() / 1000 + offset + Math.random() / 10) *
+        halfDomain +
+        min +
+        halfDomain;
+    }
+  }
+  return sineFn;
 };
 
 const generateData = () => {
@@ -30,48 +37,48 @@ const generateData = () => {
   ];
 
   type Generators = {
-    [K in DataTypeID]: (time: number) => number;
+    [K in DataTypeID]: Generator<number>;
   };
 
   const generators: Map<DeviceID, Generators> = new Map([
     [
       "70B3D5E390001000",
       {
-        dt_co2_ppm: sineFnFactory(40, 150, 0),
-        dt_temperature_C: sineFnFactory(-10, 20, 0.8),
-        dt_humidity_pct: sineFnFactory(0, 75, 0.32),
+        dt_co2_ppm: sineFnFactory(40, 150, 0)(),
+        dt_temperature_C: sineFnFactory(-10, 20, 0.8)(),
+        dt_humidity_pct: sineFnFactory(0, 75, 0.32)(),
       },
     ],
     [
       "70B3D5E390001111",
       {
-        dt_co2_ppm: sineFnFactory(200, 250, 0.21),
-        dt_temperature_C: sineFnFactory(17, 25, 0.38),
-        dt_humidity_pct: sineFnFactory(50, 75, 0.15),
+        dt_co2_ppm: sineFnFactory(200, 250, 0.21)(),
+        dt_temperature_C: sineFnFactory(17, 25, 0.38)(),
+        dt_humidity_pct: sineFnFactory(50, 75, 0.15)(),
       },
     ],
     [
       "70B3D5E390001112",
       {
-        dt_co2_ppm: sineFnFactory(0, 25, 0.42),
-        dt_temperature_C: sineFnFactory(-10, 10, 0.33),
-        dt_humidity_pct: sineFnFactory(0, 100, 0.2),
+        dt_co2_ppm: sineFnFactory(0, 25, 0.42)(),
+        dt_temperature_C: sineFnFactory(-10, 10, 0.33)(),
+        dt_humidity_pct: sineFnFactory(0, 100, 0.2)(),
       },
     ],
     [
       "70B3D5E390001113",
       {
-        dt_co2_ppm: sineFnFactory(50, 200, 0.7),
-        dt_temperature_C: sineFnFactory(5, 15, 0.11),
-        dt_humidity_pct: sineFnFactory(0, 10, 0.9),
+        dt_co2_ppm: sineFnFactory(50, 200, 0.7)(),
+        dt_temperature_C: sineFnFactory(5, 15, 0.11)(),
+        dt_humidity_pct: sineFnFactory(0, 10, 0.9)(),
       },
     ],
     [
       "70B3D5E390001114",
       {
-        dt_co2_ppm: sineFnFactory(0, 100, 0.25),
-        dt_temperature_C: sineFnFactory(10, 15, 0.1),
-        dt_humidity_pct: sineFnFactory(50, 60, 0.55),
+        dt_co2_ppm: sineFnFactory(0, 100, 0.25)(),
+        dt_temperature_C: sineFnFactory(10, 15, 0.1)(),
+        dt_humidity_pct: sineFnFactory(50, 60, 0.55)(),
       },
     ],
   ]);
@@ -87,7 +94,7 @@ const generateData = () => {
     values: dataTypes.map((dataType) => ({
       timestamp_production: now - 1,
       type: dataType,
-      value: generators.get(randomDevice)![dataType](now),
+      value: generators.get(randomDevice)![dataType].next().value,
     })),
   };
 
