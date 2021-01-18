@@ -47,7 +47,7 @@ The development environment is almost fully dockerized (see [Dockerfile](./Docke
 
 Start with these experimental commands:
 
-- `docker build --build-arg VERSION=9.2.0 . -t apata/firebase-tools:9.2.0-node12`
+- `docker build --build-arg VERSION=9.2.1 . -t apata/firebase-tools:9.2.0-node12`
 - `docker-compose up -d`
 - `docker-compose exec emulators bash`
 
