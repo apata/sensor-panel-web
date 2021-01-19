@@ -1,13 +1,15 @@
-# Building Sensor Panel
+# Sensor Panel
 
-Building Sensor Panel web app is a proof of concept app to monitor data sent by a wireless network of Internet of Things (IoT) sensors (currently simulated).
+![Sensor panel app high-level concept diagram](https://docs.google.com/drawings/d/e/2PACX-1vROmTEvFREVsHD1WEePCfTvLpxR4lVtNDJuhdq-pQKTOXSTf0dN4S2qTg2E35JbWs68IjrzibMs_kGH/pub?w=849&h=223)
+
+Sensor Panel web app (https://sensor-panel.web.app) is a proof of concept app to monitor data sent by a network of Internet of Things (IoT) sensors (currently simulated with a Google Cloud scheduled function that runs every 3 minutes).
 
 ## System architectural concept
 
 - simple cloud deployment pipelines (Firebase)
-  - single repository for back-end and front-end
-- shared Typescript models between back-end and front-end to simplify iterative changes and API changes
-  - back-end as lambda function
+  - single repository for backend and frontend
+- shared Typescript models between backend and frontend to simplify iterative changes and API changes
+  - backend as lambda function
 - cloud data store, not database
   - self-maintaining with scheduled functions
 
@@ -32,55 +34,61 @@ Building Sensor Panel web app is a proof of concept app to monitor data sent by 
 
 ## Running locally
 
-### System dependencies
+There are two options to run the project locally.
 
-#### Linux / MacOS
+### Option 1: Start the development Docker container
 
-- Node (version 12 specifically needed for Cloud Functions)
-- npm package (globally installed) firebase-tools (version 9.1.2)
-  - Run `firebase setup:emulators:firestore` to setup the emulator dependency
-  - Java Runtime Environment is needed for this particular tool
+The development environment is containerised for convenience (see [Dockerfile](./firebase-tools/Dockerfile) and [docker-compose](./docker-compose.yml)). Dockerfile is based on https://github.com/AndreySenov/firebase-tools-docker image, but with non-alpine Linux so the shell commands would execute faster in the container.
 
-#### Dockerized (experimental)
+Start the development container with these commands:
 
-The development environment is almost fully dockerized (see [Dockerfile](./Dockerfile) and [docker-compose](./docker-compose.yml)), but there are some network bugs there to be worked out, which prevent full adoption. Dockerfile is based on https://github.com/AndreySenov/firebase-tools-docker image, but with non-alpine Linux so the shell commands would execute faster in the container.
-
-Start with these experimental commands:
-
-- `docker build --build-arg VERSION=9.2.1 . -t apata/firebase-tools:9.2.0-node12`
 - `docker-compose up -d`
 - `docker-compose exec emulators bash`
+- In the opened bash terminal, continue with the development mode or production mode commands.
 
-In the opened bash terminal, continue with the development mode or production mode commands
+### Option 2: Install the dependencies manually (Linux / MacOS)
 
-### Development mode
+- Install Node (version 12, specifically needed for Cloud Functions)
+- Install NPM package `firebase-tools` globally (for version, please see VERSION build argument in [docker-compose](./docker-compose.yml) file)
+- Install a Java Runtime Environment (for version, see [Dockerfile](./firebase-tools/Dockerfile))
+- Run `firebase setup:emulators:firestore` to install emulators
+- In your terminal, continue with the development mode or production mode commands.
+
+### Run in development mode
+
+Run the following two command sets to get started
 
 #### FE
 
-- `npm install`
-- `npm start`
-- navigate to http://localhost:3000 to see the app
+- `npm install` to install the depedencies
+- `npm start` to start webpack development server
+- navigate to http://localhost:3000 to see the FE
+  - changes to files in `src` folder will cause the FE to reload
   - requests to non-static paths (example `GET /api/measurements`) are proxied to http://localhost:5001/sensor-panel/us-central1/app, which is the address for development BE
 
 #### BE
 
 - `cd functions`
-- `npm install`
-- `npm run serve`
-- functions are now served from http://localhost:5001/sensor-panel/us-central1/
-- navigate to http://localhost:4000 to see the emulator info panel with logs
+- `npm install` to install the dependencies
+- `npm run serve` to start the firebase functions and firestore emulator
+- BE is deployed to http://localhost:5001/sensor-panel/us-central1/
+  - Changes to files in `functions/src` will not be active until `npm run serve` is run again
+  - Function logs are accessible at http://localhost:4000/logs
+- Firestore Emulator UI is accessible at http://localhost:4000/firestore
 
-### Production
+### Run in production mode
 
-The production command builds the FE, BE production versions and emulates the whole environment (FE, BE, Firestore Datastore) with some prefilled data.
+The production command set builds the FE and BE production versions and emulates the whole environment (FE, BE, Firestore) with some prefilled data in Firestore.
 
+- `npm install && cd functions && npm install && cd ..` to install the dependencies
 - `npm run build && cd functions && npm run build && cd .. && firebase emulators:start --import="./emulator-data" --only functions,firestore,hosting`
-- FE is at http://localhost:5000
-- BE is at http://localhost:5001/sensor-panel/us-central1/
-- Emulator panel with Firestore panel is at http://localhost:4000
+- FE is deployed to http://localhost:5000
+- BE is deployed to http://localhost:5001/sensor-panel/us-central1/
+  - Function logs are accessible at http://localhost:4000/logs
+- Firestore Emulator UI is accessible at http://localhost:4000/firestore
 
-### API
+## API info
 
-#### POST /api/sink
+### POST /api/sink
 
 Accepts `application/json` in format as defined [here](./functions/src/models/SinkPayload.ts).
