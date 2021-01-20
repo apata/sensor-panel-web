@@ -71,5 +71,8 @@ declare module "styled-components" {
       d5: number;
       d0_5: number;
     };
+    breakpoints: {
+      sm: number;
+    };
   }
 }

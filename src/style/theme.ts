@@ -76,6 +76,9 @@ const theme: DefaultTheme = {
     d4: 32,
     d5: 40,
   },
+  breakpoints: {
+    sm: 600,
+  },
 };
 
 export default theme;

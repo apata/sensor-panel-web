@@ -1,5 +1,6 @@
 import React from "react";
 import { ThemeProvider } from "styled-components";
+import Header from "./components/Header";
 import ViewContainer from "./elements/ViewContainer";
 import DatePickerStyle from "./style/DatePickerStyle";
 import GlobalStyle from "./style/GlobalStyle";
@@ -12,6 +13,7 @@ const App = () => (
     <ResetStyle />
     <GlobalStyle />
     <DatePickerStyle />
+    <Header />
     <ViewContainer>
       <MainView />
     </ViewContainer>

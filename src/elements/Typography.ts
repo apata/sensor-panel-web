@@ -21,3 +21,7 @@ export const Paragraph = styled.p`
   line-height: ${({ theme }) => theme.typography.body1.lineHeight};
   margin-top: ${({ theme }) => theme.spacing.d1}px;
 `;
+
+export const MarginlessParagraph = styled(Paragraph)`
+  margin: 0;
+`;

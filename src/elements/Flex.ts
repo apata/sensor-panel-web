@@ -9,3 +9,8 @@ export const FlexRowMultiline = styled.div`
   display: flex;
   flex-flow: row wrap;
 `;
+
+export const FlexRowSingleline = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+`;
