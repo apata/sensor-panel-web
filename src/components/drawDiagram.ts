@@ -14,6 +14,7 @@ const drawDiagram = (
 
   const line = d3
     .line<Measurement>()
+    .defined((d) => d.value !== null && !isNaN(d.value))
     .x((d) => x(new Date(d.timestamp)))
     .y((d) => y(d.value));
 
@@ -75,11 +76,26 @@ const drawDiagram = (
   svg.append("g").call(yAxis);
 
   data.forEach(([deviceID, measurements]) => {
+    const strokeColor = deviceColorMap.get(deviceID) || "#000";
+    // draw line for undefined areas
+    svg
+      .append("path")
+      .datum(measurements.filter(line.defined()))
+      .attr("fill", "none")
+      .attr("stroke", strokeColor)
+      .attr("stroke-opacity", 0.6)
+      .attr("stroke-dasharray", "4")
+      .attr("stroke-width", 1)
+      .attr("stroke-linejoin", "round")
+      .attr("stroke-linecap", "round")
+      .attr("d", line);
+
+    // draw main line
     svg
       .append("path")
       .datum(measurements)
       .attr("fill", "none")
-      .attr("stroke", deviceColorMap.get(deviceID) || "#000")
+      .attr("stroke", strokeColor)
       .attr("stroke-width", 1.5)
       .attr("stroke-linejoin", "round")
       .attr("stroke-linecap", "round")
