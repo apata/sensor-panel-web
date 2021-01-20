@@ -22,7 +22,7 @@ const TimeRangeRow = ({
 }: TimeRangeRowProps) => {
   return (
     <FlexRowMultiline>
-      <Heading2>Select time range</Heading2>
+      <Heading2>Show data from</Heading2>
       <Spacer widthSpacing="d2"></Spacer>
       <GridContainer spacing="d1">
         <DateRangeButton

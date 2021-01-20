@@ -41,7 +41,7 @@ const DeviceFilterRow = ({
 
   return (
     <FlexRowMultiline>
-      <Heading2>Filter by devices</Heading2>
+      <Heading2>Filter data by devices</Heading2>
       <Spacer widthSpacing="d2" />
       <GridContainer spacing="d1">
         {isLoading ? (

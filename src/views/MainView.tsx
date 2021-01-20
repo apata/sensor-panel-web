@@ -16,8 +16,16 @@ const MainView = () => {
   // empty list state means are all selected
   const [selectedDevices, setSelectedDevices] = useState<string[]>([]);
 
+  // set default start time so the app
+  // wouldn't go refreshing ALL the measurements on each refrash
+  const initialStartTime = useMemo(
+    () => new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+    []
+  );
   // undefined time means no filter applied
-  const [startTime, setStartTime] = useState<string | undefined>(undefined);
+  const [startTime, setStartTime] = useState<string | undefined>(
+    initialStartTime
+  );
   const [endTime, setEndTime] = useState<string | undefined>(undefined);
 
   // color map determines which device is which color on diagram (key: device, value: rgb())
