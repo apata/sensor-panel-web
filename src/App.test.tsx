@@ -4,6 +4,6 @@ import App from "./App";
 
 test("dummy test to verify testing env works", () => {
   render(<App />);
-  const titleElement = screen.getByText(/select/i);
+  const titleElement = screen.getByText(/Show data from/i);
   expect(titleElement).toBeInTheDocument();
 });
