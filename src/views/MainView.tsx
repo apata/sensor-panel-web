@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import getDataTypes from "../api/getDataTypes";
 import DeviceFilterLogic from "../components/DeviceFilterLogic";
 import Diagram from "../components/Diagram";
