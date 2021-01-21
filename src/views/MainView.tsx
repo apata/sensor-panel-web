@@ -6,12 +6,18 @@ import TimeRangeRow from "../components/TimeRangeRow";
 import { FlexColumn } from "../elements/Flex";
 import GridContainer from "../elements/GridContainer";
 import Label from "../elements/Label";
+import Switch from "../elements/Switch";
 import useQuery from "../hooks/useQuery";
+
+const REFRESH_FREQUENCY = 10;
 
 const MainView = () => {
   const { responseData: dataTypes, error, isLoading } = useQuery({
     query: getDataTypes,
   });
+
+  // 0 is false
+  const [autoRefreshPeriod, setAutoRefreshPeriod] = useState<number>(0);
 
   // empty list state means are all selected
   const [selectedDevices, setSelectedDevices] = useState<string[]>([]);
@@ -46,6 +52,15 @@ const MainView = () => {
         setSelectedDevices={setSelectedDevices}
         setDeviceColorMap={setDeviceColorMap}
       />
+      <Switch
+        checked={!!autoRefreshPeriod}
+        onChange={() =>
+          setAutoRefreshPeriod((currentPeriod) =>
+            !!currentPeriod ? 0 : REFRESH_FREQUENCY
+          )
+        }
+        label={`Automatically refresh measurements every ${REFRESH_FREQUENCY} seconds`}
+      />
       <GridContainer spacing="d2">
         {isLoading ? (
           <Label>Loading data types...</Label>
@@ -59,6 +74,7 @@ const MainView = () => {
                   deviceColorMap={deviceColorMap}
                   key={dataType.id}
                   dataType={dataType}
+                  autoRefreshPeriod={autoRefreshPeriod}
                   queryParams={{
                     dataTypes: [dataType.id],
                     devices: selectedDevices,

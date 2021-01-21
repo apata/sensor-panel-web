@@ -13,6 +13,13 @@ const D3Diagram = ({ data, deviceColorMap }: D3DiagramProps) => {
 
   useEffect(() => {
     drawDiagram(d3Ref, data, deviceColorMap);
+
+    const currentD3Ref = d3Ref.current;
+    return () => {
+      if (currentD3Ref && currentD3Ref.firstChild) {
+        currentD3Ref.firstChild.remove();
+      }
+    };
   }, [data, deviceColorMap]);
 
   return <FullSizeContainer ref={d3Ref} />;
