@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FlexRowMultiline } from "../elements/Flex";
 import Spacer from "../elements/Spacer";
 import { Heading2 } from "../elements/Typography";
@@ -6,20 +6,15 @@ import GridContainer from "../elements/GridContainer";
 import "react-datepicker/dist/react-datepicker.css";
 import DateRangeButton from "./DateRangeButton";
 import PremadeTimeRangeButton from "./PremadeTimeRangeButton";
+import FilterContext from "../context/FilterContext";
 
-interface TimeRangeRowProps {
-  startTime?: string;
-  setStartTime: React.Dispatch<React.SetStateAction<string | undefined>>;
-  endTime?: string;
-  setEndTime: React.Dispatch<React.SetStateAction<string | undefined>>;
-}
+const TimeRangeRow = () => {
+  const {
+    params: { startTime, endTime },
+    setStartTime,
+    setEndTime,
+  } = useContext(FilterContext);
 
-const TimeRangeRow = ({
-  startTime,
-  setStartTime,
-  endTime,
-  setEndTime,
-}: TimeRangeRowProps) => {
   return (
     <FlexRowMultiline>
       <Heading2>Show data from</Heading2>

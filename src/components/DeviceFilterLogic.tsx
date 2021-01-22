@@ -1,42 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
 import getDevices from "../api/getDevices";
 import DeviceFilterRow from "./DeviceFilterRow";
 import useQuery from "../hooks/useQuery";
+import FilterContext from "../context/FilterContext";
+import DeviceColorsContext from "../context/DeviceColorsContext";
 
-interface DeviceFilterLogicProps {
-  selectedDevices: string[];
-  setSelectedDevices: React.Dispatch<React.SetStateAction<string[]>>;
-  setDeviceColorMap: React.Dispatch<React.SetStateAction<Map<string, string>>>;
-}
+const DeviceFilterLogic = () => {
+  const { colorMap, createColorMap } = useContext(DeviceColorsContext);
 
-const DeviceFilterLogic = ({
-  selectedDevices,
-  setSelectedDevices,
-  setDeviceColorMap,
-}: DeviceFilterLogicProps) => {
+  const {
+    params: { devices },
+    toggleDevice,
+  } = useContext(FilterContext);
+  const selectedDevices = devices!;
+
   const devicesQueryResponse = useQuery({
     query: getDevices,
   });
-
-  const toggleDevice = (device: string) =>
-    setSelectedDevices((currentSelectedDevices) => {
-      if (!currentSelectedDevices.length) {
-        return [device];
-      } else {
-        if (currentSelectedDevices.includes(device)) {
-          return currentSelectedDevices.filter((d) => d !== device);
-        } else {
-          return [...currentSelectedDevices, device];
-        }
-      }
-    });
 
   return (
     <DeviceFilterRow
       queryResponse={devicesQueryResponse}
       selectedDevices={selectedDevices}
       toggleDevice={toggleDevice}
-      setDeviceColorMap={setDeviceColorMap}
+      colorMap={colorMap}
+      createColorMap={createColorMap}
     />
   );
 };

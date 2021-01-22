@@ -9,7 +9,7 @@ interface TimeRangeRowProps {
   buttonLabel: string;
   buttonLabelWhenTimeActive: string;
   time?: string;
-  setTime: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setTime: (time: string | undefined) => void;
 }
 
 const DateRangeButton = ({

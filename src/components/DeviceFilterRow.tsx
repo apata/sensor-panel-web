@@ -1,11 +1,10 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import UseQueryResponseProps from "../api/models/UseQueryResponseProps";
 import FilterButton from "../elements/FilterButton";
 import { FlexRowMultiline } from "../elements/Flex";
 import GridContainer from "../elements/GridContainer";
 import Label from "../elements/Label";
 import { Heading2 } from "../elements/Typography";
-import * as d3 from "d3";
 import Spacer from "../elements/Spacer";
 import ColorBlock from "../elements/ColorBlock";
 
@@ -13,31 +12,24 @@ interface DeviceFilterRowProps {
   toggleDevice: (device: string) => void;
   selectedDevices: string[];
   queryResponse: UseQueryResponseProps<string[]>;
-  setDeviceColorMap: React.Dispatch<React.SetStateAction<Map<string, string>>>;
+  colorMap: Map<string, string>;
+  createColorMap: (devices: string[]) => void;
 }
 
 const DeviceFilterRow = ({
   toggleDevice,
   selectedDevices,
   queryResponse,
-  setDeviceColorMap,
+  colorMap,
+  createColorMap,
 }: DeviceFilterRowProps) => {
   const { responseData: devices, error, isLoading } = queryResponse;
-  const colorMap = useMemo(() => {
-    const newMap = new Map<string, string>();
-
-    if (devices && devices.length) {
-      const colorStep = 1 / (devices.length + 1);
-      devices.forEach((device, index) => {
-        newMap.set(device, d3.interpolateTurbo(0 + index * colorStep));
-      });
-    }
-    return newMap;
-  }, [devices]);
 
   useEffect(() => {
-    setDeviceColorMap(colorMap);
-  }, [colorMap, setDeviceColorMap]);
+    if (devices) {
+      createColorMap(devices);
+    }
+  }, [devices, createColorMap]);
 
   return (
     <FlexRowMultiline>

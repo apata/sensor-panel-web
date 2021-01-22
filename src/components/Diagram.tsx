@@ -1,41 +1,20 @@
-import React, { useMemo } from "react";
-import styled from "styled-components";
+import React from "react";
 import DataType from "../../functions/src/models/DataType";
-import GetMeasurementsParams from "../../functions/src/models/GetMeasurementsParams";
 import D3Diagram from "../components/D3Diagram";
 import useQuery from "../hooks/useQuery";
-import { FlexColumn } from "../elements/Flex";
 import { Heading2 } from "../elements/Typography";
-import getMeasurements from "../api/getMeasurements";
-import measurementsContainDataPoints from "./measurementsContainDataPoints";
+import measurementsContainDataPoints from "../utils/measurementsContainDataPoints";
+import { MeasurementsByDevice } from "../../functions/src/models/MeasurementsByDevice";
+import QueryModel from "../api/models/QueryModel";
+import DiagramContainer from "../elements/DiagramContainer";
+import DiagramInner from "../elements/DiagramInner";
 
 interface DiagramProps {
   dataType: DataType;
-  queryParams: GetMeasurementsParams;
-  deviceColorMap: Map<string, string>;
+  query: QueryModel<MeasurementsByDevice>;
 }
 
-const DiagramContainer = styled(FlexColumn)`
-  margin: ${({ theme }) => theme.spacing.d2}px;
-  width: 100%;
-
-  @media (min-width: 1072px) {
-    width: 500px;
-  }
-`;
-
-const DiagramInner = styled.div`
-  display: flex;
-  flex-grow: 1;
-  width: 100%;
-  background-color: ${({ theme }) => theme.palette.background.paper};
-`;
-
-const Diagram = ({ dataType, queryParams, deviceColorMap }: DiagramProps) => {
-  const query = useMemo(() => {
-    return getMeasurements(queryParams);
-  }, [queryParams]);
-
+const Diagram = ({ dataType, query }: DiagramProps) => {
   const { responseData: measurements, error, isLoading } = useQuery({
     query,
   });
@@ -53,7 +32,7 @@ const Diagram = ({ dataType, queryParams, deviceColorMap }: DiagramProps) => {
         ) : measurements &&
           measurements.length &&
           measurementsContainDataPoints(measurements) ? (
-          <D3Diagram data={measurements} deviceColorMap={deviceColorMap} />
+          <D3Diagram data={measurements} />
         ) : (
           "No data to display."
         )}

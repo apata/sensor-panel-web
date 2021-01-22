@@ -1,5 +1,7 @@
 import React from "react";
 import { ThemeProvider } from "styled-components";
+import { DeviceColorsContextProvider } from "./context/DeviceColorsContext";
+import { FilterContextProvider } from "./context/FilterContext";
 import Header from "./components/Header";
 import ViewContainer from "./elements/ViewContainer";
 import DatePickerStyle from "./style/DatePickerStyle";
@@ -13,10 +15,14 @@ const App = () => (
     <ResetStyle />
     <GlobalStyle />
     <DatePickerStyle />
-    <Header />
-    <ViewContainer>
-      <MainView />
-    </ViewContainer>
+    <FilterContextProvider>
+      <DeviceColorsContextProvider>
+        <Header />
+        <ViewContainer>
+          <MainView />
+        </ViewContainer>
+      </DeviceColorsContextProvider>
+    </FilterContextProvider>
   </ThemeProvider>
 );
 

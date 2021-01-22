@@ -1,10 +1,10 @@
 import React from "react";
 import FilterButton from "../elements/FilterButton";
-import getTimeRangeToNow from "./getTimeRangeToNow";
+import getTimeRangeToNow from "../utils/getTimeRangeToNow";
 
 interface PremadeTimeRangeButtonProps {
-  setStartTime: React.Dispatch<React.SetStateAction<string | undefined>>;
-  setEndTime: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setStartTime: (time: string | undefined) => void;
+  setEndTime: (time: string | undefined) => void;
   label: string;
   timeToPrevious: number;
 }

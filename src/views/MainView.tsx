@@ -1,80 +1,15 @@
-import React, { useState, useMemo } from "react";
-import getDataTypes from "../api/getDataTypes";
+import React from "react";
 import DeviceFilterLogic from "../components/DeviceFilterLogic";
-import Diagram from "../components/Diagram";
 import TimeRangeRow from "../components/TimeRangeRow";
 import { FlexColumn } from "../elements/Flex";
-import GridContainer from "../elements/GridContainer";
-import Label from "../elements/Label";
-import useQuery from "../hooks/useQuery";
+import Diagrams from "../components/Diagrams";
 
-const MainView = () => {
-  const { responseData: dataTypes, error, isLoading } = useQuery({
-    query: getDataTypes,
-  });
-
-  // empty list state means are all selected
-  const [selectedDevices, setSelectedDevices] = useState<string[]>([]);
-
-  // set default start time so the app
-  // wouldn't go refreshing ALL the measurements on each refrash
-  const initialStartTime = useMemo(
-    () => new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
-    []
-  );
-  // undefined time means no filter applied
-  const [startTime, setStartTime] = useState<string | undefined>(
-    initialStartTime
-  );
-  const [endTime, setEndTime] = useState<string | undefined>(undefined);
-
-  // color map determines which device is which color on diagram (key: device, value: rgb())
-  const [deviceColorMap, setDeviceColorMap] = useState(
-    new Map<string, string>()
-  );
-
-  return (
-    <FlexColumn style={{ overflowX: "hidden" }}>
-      <TimeRangeRow
-        startTime={startTime}
-        endTime={endTime}
-        setStartTime={setStartTime}
-        setEndTime={setEndTime}
-      />
-      <DeviceFilterLogic
-        selectedDevices={selectedDevices}
-        setSelectedDevices={setSelectedDevices}
-        setDeviceColorMap={setDeviceColorMap}
-      />
-      <GridContainer spacing="d2">
-        {isLoading ? (
-          <Label>Loading data types...</Label>
-        ) : error ? (
-          <Label>Error loading data types.</Label>
-        ) : dataTypes && dataTypes.length ? (
-          <>
-            {dataTypes.map((dataType) => {
-              return (
-                <Diagram
-                  deviceColorMap={deviceColorMap}
-                  key={dataType.id}
-                  dataType={dataType}
-                  queryParams={{
-                    dataTypes: [dataType.id],
-                    devices: selectedDevices,
-                    startTime: startTime,
-                    endTime: endTime,
-                  }}
-                />
-              );
-            })}
-          </>
-        ) : (
-          <Label>No data types found.</Label>
-        )}
-      </GridContainer>
-    </FlexColumn>
-  );
-};
+const MainView = () => (
+  <FlexColumn style={{ overflowX: "hidden" }}>
+    <TimeRangeRow />
+    <DeviceFilterLogic />
+    <Diagrams />
+  </FlexColumn>
+);
 
 export default MainView;

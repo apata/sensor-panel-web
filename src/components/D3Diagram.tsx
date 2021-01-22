@@ -1,19 +1,20 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import FullSizeContainer from "../elements/FullSizeContainer";
 import { MeasurementsByDevice } from "../../functions/src/models/MeasurementsByDevice";
-import drawDiagram from "./drawDiagram";
+import drawDiagram from "../utils/drawDiagram";
+import DeviceColorsContext from "../context/DeviceColorsContext";
 
 interface D3DiagramProps {
   data: MeasurementsByDevice;
-  deviceColorMap: Map<string, string>;
 }
 
-const D3Diagram = ({ data, deviceColorMap }: D3DiagramProps) => {
+const D3Diagram = ({ data }: D3DiagramProps) => {
+  const { colorMap } = useContext(DeviceColorsContext);
   const d3Ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    drawDiagram(d3Ref, data, deviceColorMap);
-  }, [data, deviceColorMap]);
+    drawDiagram(d3Ref, data, colorMap);
+  }, [data, colorMap]);
 
   return <FullSizeContainer ref={d3Ref} />;
 };
