@@ -68,10 +68,7 @@ const getMeasurements: RequestHandler = async (request, response) => {
         .get();
 
       const measurementsForDevice = snapshot.docs.map((d) =>
-        transformSensorValueToMeasurement(
-          d.data() as SensorValuePayload,
-          deviceID
-        )
+        transformSensorValueToMeasurement(d.data() as SensorValuePayload)
       );
       measurementsByDevice.push([deviceID, measurementsForDevice]);
     }
