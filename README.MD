@@ -22,11 +22,13 @@ Sensor Panel web app (https://sensor-panel.web.app) is a proof of concept app to
 - Typescript
 - React single page app (bootstrapped with create-react-app)
 - D3.js data visualisation library
+- Located in repository root folder `.`
 
 ### Back-end
 
 - Typescript
 - Express "server" as Firebase Cloud Function https endpoint
+- Located in folder `./functions`
 
 ### Data persistence
 
@@ -34,9 +36,14 @@ Sensor Panel web app (https://sensor-panel.web.app) is a proof of concept app to
 
 ## Running locally
 
-There are two options to run the project locally.
+There are two steps to run the project locally. Both steps have two options to choose from.
 
-### Option 1: Start the development Docker container
+|                      | Option A         | Option B             |
+| -------------------- | ---------------- | -------------------- |
+| Step 1: Dependencies | Docker container | Linux / MacOS native |
+| Step 2: Environment  | Development mode | Production mode      |
+
+### Step 1A: Start the development Docker container
 
 The development environment is containerised for convenience (see [Dockerfile](./firebase-tools/Dockerfile) and [docker-compose](./docker-compose.yml)). Dockerfile is based on https://github.com/AndreySenov/firebase-tools-docker image, but with non-alpine Linux so the shell commands would execute faster in the container.
 
@@ -46,7 +53,7 @@ Start the development container with these commands:
 - `docker-compose exec emulators bash`
 - In the opened bash terminal, continue with the development mode or production mode commands.
 
-### Option 2: Install the dependencies manually (Linux / MacOS)
+### Step 1B: Install the dependencies manually (Linux / MacOS)
 
 - Install Node (version 12, specifically needed for Cloud Functions)
 - Install NPM package `firebase-tools` globally (for version, please see VERSION build argument in [docker-compose](./docker-compose.yml) file)
@@ -54,7 +61,7 @@ Start the development container with these commands:
 - Run `firebase setup:emulators:firestore` to install emulators
 - In your terminal, continue with the development mode or production mode commands.
 
-### Run in development mode
+### Step 2A: Run in development mode
 
 Run the following two command sets to get started
 
@@ -76,7 +83,7 @@ Run the following two command sets to get started
   - Function logs are accessible at http://localhost:4000/logs
 - Firestore Emulator UI is accessible at http://localhost:4000/firestore
 
-### Run in production mode
+### Step 2B: Run in production mode
 
 The production command set builds the FE and BE production versions and emulates the whole environment (FE, BE, Firestore) with some prefilled data in Firestore.
 
