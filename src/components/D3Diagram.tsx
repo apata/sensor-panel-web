@@ -14,6 +14,11 @@ const D3Diagram = ({ data }: D3DiagramProps) => {
 
   useEffect(() => {
     drawDiagram(d3Ref, data, colorMap);
+
+    const currentRef = d3Ref.current;
+    return () => {
+      currentRef?.firstChild?.remove();
+    };
   }, [data, colorMap]);
 
   return <FullSizeContainer ref={d3Ref} />;
